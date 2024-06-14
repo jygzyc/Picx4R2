@@ -46,3 +46,19 @@ export async function getFileName(val : string, time : number) : Promise<string>
     const rand = Math.floor(Math.random() * 100000)
     return randomString(time + rand).concat(`.${types[0].ext}`)
 }
+
+
+// 获取文件名
+export async function getFilePath(val: string, filename: string): Promise<string> {
+    const types = supportFiles.filter(it => it.type === val)
+    if (!types || types.length < 1) {
+        return val
+    }
+
+    let now = new Date()
+    const year = now.getFullYear()
+    let month =  (now.getMonth() + 1).toString().padStart(2, '0') 
+
+    return `${year}/${month}/${filename}`
+
+}
