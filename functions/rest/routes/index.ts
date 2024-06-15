@@ -1,8 +1,8 @@
 import { router } from '../router';
 import { Env } from '../[[path]]'
 import { json } from 'itty-router-extras';
-import StatusCode, { Ok, Fail, Build, ImgItem, ImgList, ImgReq, Folder, AuthToken, FailCode, NotAuth } from "../type";
-import { checkFileType, getFileName, parseRange, getFilePath } from '../utils'
+import StatusCode, { Ok, Error, AuthError, Build, ImgItem, ImgList, ImgReq, Folder, AuthToken} from "../type";
+import { checkFileType, parseRange, getFilePath } from '../utils'
 import { R2ListOptions } from "@cloudflare/workers-types";
 
 const auth = async (request : Request, env : Env) => {
@@ -14,15 +14,15 @@ const auth = async (request : Request, env : Env) => {
     // get user token
     const token = request.headers.get('Authorization')
     if (!token) {
-        return json(NotAuth())
+        return json(AuthError("Authorization field not exists"))
     }
-    // with kv equal
+    // with env auth_token equal
     const authKey = env.AUTH_TOKEN
     if (!authKey) {
-        return json(Fail("system not auth setting"))
+        return json(AuthError("System is not configured with an `AUTH_TOKEN`"))
     }
     if (authKey != token) {
-        return json(FailCode("auth fail", StatusCode.NotAuth))
+        return json(AuthError("Token does not match, authentication failed."))
     }
     // return new Response('Not Authenticated', { status: 401 })
 }
@@ -56,11 +56,11 @@ router.post('/list', auth, async (req : Request, env : Env) => {
     if (!data.delimiter) {
         data.delimiter = "/"
     }
-    let include = undefined
+    let include = ""
     if (data.delimiter != "/") {
         include = data.delimiter
     }
-    // console.log(include)
+    console.log(include)
     const options = <R2ListOptions>{
         limit: data.limit,
         cursor: data.cursor,
@@ -97,7 +97,7 @@ router.post('/upload',  auth, async (req: Request, env : Env) => {
     for (let item of images) {
         const fileType = item.type
         if (!checkFileType(fileType)) {
-            errs.push(`${fileType} not support.`)
+            errs.push(`${item.name}: ${fileType} not support.`)
             continue
         }
         const originFileName = item.name
@@ -127,12 +127,12 @@ router.post("/folder",  auth, async (req: Request, env: Env) => {
         const data = await req.json() as Folder
         const regx = /^[0-9A-Za-z_-]+$/
         if (!regx.test(data.name)) {
-            return json(Fail("Folder name error"))
+            return json(Error("Folder name error"))
         }
         await env.R2.put(data.name + '/', null)
         return json(Ok("Success"))
     } catch (e) {
-        return json(Fail("Create folder fail"))
+        return json(Error("Folder creation failed"))
     }
 })
 
@@ -140,7 +140,7 @@ router.post("/folder",  auth, async (req: Request, env: Env) => {
 router.get('/del/:id+', async (req : Request, env: Env) => {
     const key = req.params.id
     if (!key) {
-        return json(Fail("not delete key"))
+        return json(Error("Delete id error"))
     }
     try {
         await env.R2.delete(key)
@@ -156,7 +156,7 @@ router.delete("/",  auth, async (req : Request, env: Env) => {
     // console.log(params)
     const keys = params.keys;
     if (!keys || keys.length < 1) {
-        return json(Fail("not delete keys"))
+        return json(Error("not delete keys"))
     }
     const arr = keys.split(',')
     try {
@@ -180,7 +180,7 @@ router.get("/:id+", async (req : Request, env : Env) => {
         onlyIf: req.headers,
     })
     if (object == null) {
-        return json(Fail("object not found"))
+        return json(Error("object not found"))
     }
     const headers = new Headers()
     object.writeHttpMetadata(headers)

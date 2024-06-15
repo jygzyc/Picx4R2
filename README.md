@@ -37,14 +37,6 @@ A free image service based on cloudflare Pages & R2.
     2. `COPY_URL`：复制的路径，如有 R2 存储桶自定义域名则填写自定义域名，否则开启并填写公共 R2.dev 存储桶的 URL；
     3. `NODE_VERSION`：`20.11.1`；
     4. `NPM_VERSION`：`10.2.4`。
-    
-6. 创建 KV 命名空间
-
-    1. 在 "Workers 和 Pages" 创建 KV 命名空间。
-
-7. 设置函数，KV 命名空间绑定
-
-    1. 回到 cloudflare page，点击 "设置" → "函数" 中 "KV 命名空间绑定"。
    
 8. 设置函数，绑定 R2
 
@@ -55,4 +47,4 @@ A free image service based on cloudflare Pages & R2.
 
 ### 项目参考来源
 
-原始项目：[roimdev/roim-picx](https://github.com/roimdev/roim-picx)，修改使用了 [shenweiyan/Picx4R2](https://github.com/shenweiyan/Picx4R2)
+原始项目：[roimdev/roim-picx](https://github.com/roimdev/roim-picx)，修改使用了 [shenweiyan/Picx4R2](https://github.com/shenweiyan/Picx4R2)，参考[使用R2+Page部署免费的图床【白嫖Cloudflare】](https://blog.lianglianglee.com/2024/01/15/cloudflare-r2-page-image-server/)

@@ -30,29 +30,22 @@ export interface Folder {
     name: string
 }
 
-export function NotAuth() : Result {
+export function AuthError(msg: string): Result {
     return <Result> {
-        code: StatusCode.NotAuth,
-        msg: "Not Authorization",
-        data: null
-    }
-}
-
-export function FailCode(msg : string, code: number) : Result {
-    return <Result> {
-        code: code,
+        code: StatusCode.AUTH_ERROR,
         msg: msg,
         data: null
     }
 }
 
-export function Fail(msg : string) : Result {
+export function Error(msg : string) : Result {
     return <Result> {
         code: StatusCode.ERROR,
         msg: msg,
         data: null
     }
 }
+
 export function Ok(data : any) : Result {
     return <Result> {
         code: StatusCode.OK,
@@ -60,6 +53,7 @@ export function Ok(data : any) : Result {
         data: data
     }
 }
+
 export function Build(data : any, msg: string) : Result {
     return <Result> {
         code: StatusCode.OK,
@@ -67,10 +61,12 @@ export function Build(data : any, msg: string) : Result {
         data: data
     }
 }
-const StatusCode = {
-    OK: 200,
-    ERROR: 500,
-    NotAuth: 401
+
+enum StatusCode {
+    OK = 200,
+    ERROR = 500,
+    AUTH_ERROR = 401,
+
 }
 
 export interface AuthToken {
