@@ -36,11 +36,11 @@
                     </el-tooltip>
                     <el-divider direction="vertical" class="h-full" />
                     <el-popconfirm title="确认删除图片吗？" confirm-button-type="danger" @confirm="() => {
-                            // (e: Event) => boolean ???
-                            loading = true
-                            emit('delete')
-                            return true
-                        }
+                        // (e: Event) => boolean ???
+                        loading = true
+                        emit('delete')
+                        return true
+                    }
                         ">
                         <template #reference>
                             <div class="flex-1 flex items-center justify-center cursor-pointer">
