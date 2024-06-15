@@ -1,3 +1,4 @@
+import { EventContext, PagesFunction, R2Bucket } from '@cloudflare/workers-types';
 import { error } from 'itty-router-extras';
 
 export interface Env {
@@ -6,7 +7,7 @@ export interface Env {
     R2: R2Bucket
 }
 
-export const onRequest: PagesFunction<Env> = async (context: EventContext) => {
+export const onRequest: PagesFunction<Env> = async (context) => {
     const { router } = await import('./router').then(
         async (module) => (await import('./routes'), module)
     );
