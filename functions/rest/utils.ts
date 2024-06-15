@@ -2,19 +2,19 @@ const supportFiles = [{type:'image/png',ext:'png'},{type:'image/jpeg',ext:'jpeg'
 const supportFile = 'image/png,image/jpeg,image/gif,image/webp,image/jpg,image/x-icon,application/x-ico,image/vnd.microsoft.icon'
 
 // 字符串编码
-export function randomString(value: number) {
-    let baseStr = 'Aa0Bb1Cc2Dd3Ee4Ff5Gg6Hh7Ii8Jj9KkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
-    const chars = baseStr.split('');
-    let maxPos = baseStr.length;
-    const uuid = [];
-    let q = value;
-    for(;q > 0;) {
-        let mod = q % maxPos;
-        q = (q - mod) / maxPos;
-        uuid.push(chars[mod]);
-    }
-    return uuid.join('');
-}
+// export function randomString(value: number) {
+//     let baseStr = 'Aa0Bb1Cc2Dd3Ee4Ff5Gg6Hh7Ii8Jj9KkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+//     const chars = baseStr.split('');
+//     let maxPos = baseStr.length;
+//     const uuid = [];
+//     let q = value;
+//     for(;q > 0;) {
+//         let mod = q % maxPos;
+//         q = (q - mod) / maxPos;
+//         uuid.push(chars[mod]);
+//     }
+//     return uuid.join('');
+// }
 
 // 解析range
 export function parseRange(encoded: string | null): undefined | { offset: number, end: number, length: number } {
@@ -38,14 +38,14 @@ export function checkFileType(val : string) : boolean {
 }
 
 // 获取文件名
-export async function getFileName(val : string, time : number) : Promise<string> {
-    const types = supportFiles.filter(it => it.type === val)
-    if (!types || types.length < 1) {
-        return val
-    }
-    const rand = Math.floor(Math.random() * 100000)
-    return randomString(time + rand).concat(`.${types[0].ext}`)
-}
+// export async function getFileName(val : string, time : number) : Promise<string> {
+//     const types = supportFiles.filter(it => it.type === val)
+//     if (!types || types.length < 1) {
+//         return val
+//     }
+//     const rand = Math.floor(Math.random() * 100000)
+//     return randomString(time + rand).concat(`.${types[0].ext}`)
+// }
 
 
 // 获取文件名
