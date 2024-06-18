@@ -3,7 +3,7 @@
         <loading-overlay :loading="loading" />
 
         <el-image class="block w-full h-40 lg:h-60" :src="src" fit="cover" hide-on-click-modal
-            @load="loading = false" />
+            @load="loading = false" :preview-src-list="[src]" />
         <div class="w-full absolute left-0 bottom-0 bg-slate-800/70 backdrop-blur-sm">
             <div class="p-2">
                 <div class="w-full flex items-center text-white">
