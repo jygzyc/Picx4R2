@@ -12,11 +12,11 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         async (module) => (await import('./routes'), module)
     );
 
-    // try {
+    try {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const response: Response | undefined = await router.handle(context.request, context.env);
         return response ?? error(404, 'not found');
-    // } catch (err) {
-    //     return error(500, (err as Error).message);
-    // }
+    } catch (err) {
+        return error(500, (err as Error).message);
+    }
 };

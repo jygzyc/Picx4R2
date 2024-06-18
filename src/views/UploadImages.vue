@@ -137,6 +137,19 @@ const clipboardUpload = () => {
                         }
                     ]
                 });
+            } else if(item.types.includes("image/jpg")) {
+                item.getType("image/jpg").then(blob => {
+                    const file = new File([blob], "clipboard.jpg", {
+                        type: "image/jpg",
+                    });
+                    convertedImages.value = [
+                        ...convertedImages.value,
+                        {
+                            file,
+                            tmpSrc: URL.createObjectURL(file)
+                        }
+                    ]
+                });
             } else {
                 ElMessage({
                     message: '剪切板中不是图片！',
@@ -209,7 +222,13 @@ const uploadImages = () => {
             // console.log(res)
             // router.push('/')
         })
-        .catch(() => { })
+        .catch((e) => { 
+            elNotify({
+                title: '上传错误',
+                message: `错误信息：${e}`,
+                type: 'error'
+            })
+        })
         .finally(() => {
             loading.value = false
         })

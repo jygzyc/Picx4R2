@@ -28,8 +28,8 @@ const auth = async (request: Request, env: Env) => {
 }
 
 // 检测token是否有效
-router.post('/checkToken', async (req: Request, env: Env) => {
-    const data = await req.json() as AuthToken
+router.post('/checkToken', async (request: Request, env: Env) => {
+    const data = await request.json() as AuthToken
     const token = data.token
     if (!token) {
         return json(Ok(false))
@@ -45,8 +45,8 @@ router.post('/checkToken', async (req: Request, env: Env) => {
 })
 
 // list image
-router.post('/list', auth, async (req: Request, env: Env) => {
-    const data = await req.json() as ImgReq
+router.post('/list', auth, async (request: Request, env: Env) => {
+    const data = await request.json() as ImgReq
     if (!data.limit) {
         data.limit = 10
     }
