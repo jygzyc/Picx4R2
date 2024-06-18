@@ -18,7 +18,7 @@ export interface ImgItem {
 	key : string
 	url : string
 	size: number
-
+    copyUrl: string
 	filename ?: string
 }
 

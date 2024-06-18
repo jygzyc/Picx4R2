@@ -43,7 +43,7 @@ const htmlLinks = () => {
   const length = props.imageList.length
   for(let i = 0; i < length; i++) {
     const it = props.imageList[i]
-    text += `<a href="${it.url}" target="_blank"><img src="${it.url}"></a>\n`
+    text += `<a href="${it.copyUrl}" target="_blank"><img src="${it.copyUrl}"></a>\n`
   }
   return text
 }
@@ -52,7 +52,7 @@ const viewLinks = () => {
   const length = props.imageList.length
   for(let i = 0; i < length; i++) {
     const it = props.imageList[i]
-    text += `${it.url}\n`
+    text += `${it.copyUrl}\n`
   }
   return text
 }
@@ -61,7 +61,7 @@ const markdownLinks = () => {
   const length = props.imageList.length
   for(let i = 0; i < length; i++) {
     const it = props.imageList[i]
-    text += `![${it.filename}](${it.url})\n`
+    text += `![${it.filename}](${it.copyUrl})\n`
   }
   return text
 }
@@ -70,7 +70,7 @@ const bbcodeLinks = () => {
   const length = props.imageList.length
   for(let i = 0; i < length; i++) {
     const it = props.imageList[i]
-    text += `![${it.filename}](${it.url})\n`
+    text += `![${it.filename}](${it.copyUrl})\n`
   }
   return text
 }
